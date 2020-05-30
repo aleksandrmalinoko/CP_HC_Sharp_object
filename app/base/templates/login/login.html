@@ -29,25 +29,25 @@
       <div class="animate form login_form">
         <section class="login_content">
           <form data-parsley-validate method="post">
-            <h1>Login Form</h1>
+            <h1>Учетные данные</h1>
             {% for field in login_form if field.widget.input_type != 'hidden'  %}
               <div>
                 {{ field(class="form-control required", placeholder=field.label.text) }}
               </div>
             {% endfor %}
             <div>
-            <button type="submit" class="btn btn-default submit" name="login">Log in</button>
+            <button type="submit" class="btn btn-default submit" name="login">Войти</button>
             </div>
             <div class="clearfix"></div>
             <div class="separator">
-              <p class="change_link">New to site?
-                <a href="#signup" class="to_register"> Create Account </a>
+              <p class="change_link">Впервые на сайте?
+                <a href="#signup" class="to_register"> Создать аккаунт </a>
               </p>
               <div class="clearfix"></div>
               <br/>
               <div>
-                <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-                <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+                <h1><i class="fa fa-paw"></i> Телемедицина</h1>
+                <p>©2020 All Rights Reserved.</p>
               </div>
             </div>
           </form>
@@ -56,25 +56,25 @@
       <div id="register" class="animate form registration_form">
         <section class="login_content">
           <form data-parsley-validate id="create-user-form" method="post">
-            <h1>Create Account</h1>
+            <h1>Создать аккаунт</h1>
             {% for field in create_account_form if field.widget.input_type != 'hidden'  %}
               <div>
                 {{ field(class="form-control required", placeholder=field.label.text) }}
               </div>
             {% endfor %}
             <div>
-              <button type="button" class="btn btn-default" onclick="signup()">Sign up</button>
+              <button type="button" class="btn btn-default" onclick="signup()">Зарегистрироваться</button>
             </div>
             <div class="clearfix"></div>
             <div class="separator">
-              <p class="change_link">Already a member ?
-                <a href="#signin" id="login-button" class="to_register"> Log in </a>
+              <p class="change_link">Уже имеете учетную запись ?
+                <a href="#signin" id="login-button" class="to_register"> Войти </a>
               </p>
               <div class="clearfix"></div>
               <br/>
               <div>
-                <h1><i class="fa fa-paw"></i> Gentelella Alela!</h1>
-                <p>©2016 All Rights Reserved. Gentelella Alela! is a Bootstrap 3 template. Privacy and Terms</p>
+                <h1><i class="fa fa-paw"></i> Телемедицина!</h1>
+                <p>©2020 All Rights Reserved.</p>
               </div>
             </div>
           </form>
