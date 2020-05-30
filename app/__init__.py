@@ -78,5 +78,4 @@ def create_app(config, selenium=False):
     configure_database(app)
     configure_logs(app)
     apply_themes(app)
-    socketio.init_app(app)
     return app
