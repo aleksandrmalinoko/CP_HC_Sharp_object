@@ -11,7 +11,7 @@ def route_template(template):
     return render_template(template + '.html')
 
 
-@blueprint.route('/chat/base', methods=['GET', 'POST'])
+@blueprint.route('/chat/begin', methods=['GET', 'POST'])
 @login_required
 def index():
     """Login form to enter a room."""
@@ -23,7 +23,7 @@ def index():
     elif request.method == 'GET':
         form.name.data = session.get('name', '')
         form.room.data = session.get('room', '')
-    return render_template('base.html', form=form)
+    return render_template('begin.html', form=form)
 
 
 @blueprint.route('/chat/chat')
