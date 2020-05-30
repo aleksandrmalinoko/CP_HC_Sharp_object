@@ -12,7 +12,11 @@
                     <span class=" fa fa-angle-down"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href="/patient/profile">Личная страница</a></li>
+                    {% if current_user.username == 'doctor' %}
+                        <li><a href="/doctor/doctor1">Личная страница</a></li>
+                    {% else %}
+                        <li><a href="/patient/profile">Личная страница</a></li>
+                    {% endif %}
                     <li><a href="javascript:;">Настройки</a></li>
                     <li><a href="javascript:;">Помощь</a></li>
                     <li><a href="/logout"><i class="fa fa-sign-out pull-right"></i> Выйти</a></li>
