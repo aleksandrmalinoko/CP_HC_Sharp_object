@@ -1,12 +1,15 @@
-from flask import Flask, url_for
-from flask_login import LoginManager
-from flask_sqlalchemy import SQLAlchemy
 from importlib import import_module
 from logging import basicConfig, DEBUG, getLogger, StreamHandler
 from os import path
 
+from flask import Flask, url_for
+from flask_login import LoginManager
+from flask_socketio import SocketIO
+from flask_sqlalchemy import SQLAlchemy
+
 db = SQLAlchemy()
 login_manager = LoginManager()
+socketio = SocketIO()
 
 
 def register_extensions(app):
@@ -15,7 +18,7 @@ def register_extensions(app):
 
 
 def register_blueprints(app):
-    for module_name in ('base', 'home', 'doctor', 'patient'):
+    for module_name in ('base', 'home', 'doctor', 'patient', 'chat'):
         module = import_module('app.{}.routes'.format(module_name))
         app.register_blueprint(module.blueprint)
 
@@ -77,4 +80,5 @@ def create_app(config, selenium=False):
     configure_database(app)
     configure_logs(app)
     apply_themes(app)
+    socketio.init_app(app)
     return app

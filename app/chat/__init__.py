@@ -1,9 +1,9 @@
 from flask import Blueprint
 
 blueprint = Blueprint(
-    'ui_blueprint',
+    'chat_blueprint',
     __name__,
-    url_prefix='/ui',
+    url_prefix='/chat',
     template_folder='templates',
     static_folder='static'
 )
