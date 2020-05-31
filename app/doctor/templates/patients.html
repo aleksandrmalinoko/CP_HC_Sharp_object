@@ -1,0 +1,236 @@
+{% extends "base_site.html" %}
+
+{% block title %} Пациенты {% endblock title %}
+
+
+{% block stylesheets %}
+    {{ super() }}
+    <link href="{{ url_for('static', filename='vendors/pnotify/dist/pnotify.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/pnotify/dist/pnotify.buttons.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/pnotify/dist/pnotify.nonblock.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/datatables.net-bs/css/dataTables.bootstrap.min.css') }}"
+          rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}"
+          rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css') }}"
+          rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}"
+          rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css') }}"
+          rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="right_col" role="main">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Создание нового пациента</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <form data-parsley-validate class="form-horizontal form-label-left"
+                          enctype="application/x-www-form-urlencoded">
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="id">
+                                Идентификатор
+                            </label>
+                            <div class="col-sm-10">
+                                <input type="text" id="id" required="required" name="id"
+                                       class="form-control" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="username">
+                                ФИО
+                            </label>
+                            <div class="col-sm-10">
+                                <input type="text" id="username" required="required" name="username"
+                                       class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="birthday">
+                                Дата рождения
+                            </label>
+                            <div class="col-sm-10">
+                                <input type="text" id="birthday" required="required" name="birthday"
+                                       class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="snails">
+                                Снилс
+                            </label>
+                            <div class="col-sm-10">
+                                <input type="text" id="snails" required="required" name="snails"
+                                       class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label" for="date_reception">
+                                Дата первичного приёма
+                            </label>
+                            <div class="col-sm-10">
+                                <input type="text" id="date_reception" required="required" name="date_reception"
+                                       class="form-control">
+                            </div>
+                        </div>
+                        <div class="ln_solid"></div>
+                        <div class="form-group row">
+                            <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3">
+                                <button class="btn btn-danger" type="button" onclick="remove_patient();"
+                                        style="margin: 5px">
+                                    Удалить
+                                </button>
+                                <button class="btn btn-primary" type="reset"
+                                        style="margin: 5px">
+                                    Отмена
+                                </button>
+                                <button class="btn btn-success" type="button" onclick="edit_patient();"
+                                        style="margin: 5px">
+                                    Записать
+                                </button>
+                                <button class="btn btn-info" type="button" onclick="add_patient();"
+                                        style="margin: 5px">
+                                    Добавить
+                                </button>
+                                <button class="btn btn-warning" type="button" onclick="open_patient();"
+                                        style="margin: 5px">
+                                    Открыть
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="x_panel">
+                <div class="x_title">
+                    <h1>Таблица пациентов</h1>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <table id="patients" class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>ФИО</th>
+                            <th>Дата рождения</th>
+                            <th>Снилс</th>
+                            <th>Дата первичного приёма</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for d in data %}
+                            <tr>
+                                <td>{{ d.id }}</td>
+                                <td>{{ d.username }}</td>
+                                <td>{{ d.birthday }}</td>
+                                <td>{{ d.snails }}</td>
+                                <td>{{ d.date_reception }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        {#        <div class="col-md-12 col-sm-12 col-xs-12">#}
+        {#            <div class="x_panel">#}
+        {#                <div class="x_title">#}
+        {#                    <h2>Пациенты<small>basic table subtitle</small></h2>#}
+        {#                    <div class="clearfix"></div>#}
+        {#                </div>#}
+        {#                <div class="form-group">#}
+        {#                    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">#}
+        {#                        <button type="button" class="btn btn-primary">Добавить</button>#}
+        {#                    </div>#}
+        {#                </div>#}
+        {#                <div class="x_content">#}
+        {#                    <div class="ln_solid"></div>#}
+        {##}
+        {#                    <table class="table">#}
+        {#                        <thead>#}
+        {#                        <tr>#}
+        {#                            <th>№</th>#}
+        {#                            <th>Фамилия Имя Отчество</th>#}
+        {#                            <th>Дата рождения</th>#}
+        {#                            <th>СНИЛС</th>#}
+        {#                            <th>Дата первичного приема</th>#}
+        {#                            <th>Профиль</th>#}
+        {#                        </tr>#}
+        {#                        </thead>#}
+        {#                        <tbody>#}
+        {#                        <tr>#}
+        {#                            <th>1</th>#}
+        {#                            <td>Иванов Иван Иванович</td>#}
+        {#                            <td>10.10.1960</td>#}
+        {#                            <td>123-456-789-01</td>#}
+        {#                            <td>01.01.2020</td>#}
+        {#                            <td>#}
+        {#                                <a href="/patient/profile1">#}
+        {#                                    <button type="button" class="btn btn-success btn-xs">Открыть</button>#}
+        {#                                </a>#}
+        {#                            </td>#}
+        {#                        </tr>#}
+        {#                        <tr>#}
+        {#                            <th>2</th>#}
+        {#                            <td>Петров Петр Петрович</td>#}
+        {#                            <td>20.02.1967</td>#}
+        {#                            <td>123-456-789-02</td>#}
+        {#                            <td>05.01.2020</td>#}
+        {#                            <td>#}
+        {#                                <a href="/patient/profile2">#}
+        {#                                    <button type="button" class="btn btn-success btn-xs">Открыть</button>#}
+        {#                                </a>#}
+        {#                            </td>#}
+        {#                        </tr>#}
+        {#                        <tr>#}
+        {#                            <th>3</th>#}
+        {#                            <td>Сидоров Сидор Сидорович</td>#}
+        {#                            <td>26.09.1959</td>#}
+        {#                            <td>123-456-789-03</td>#}
+        {#                            <td>03.01.2020</td>#}
+        {#                            <td>#}
+        {#                                <a href="/patient/profile3">#}
+        {#                                    <button type="button" class="btn btn-success btn-xs">Открыть</button>#}
+        {#                                </a>#}
+        {#                            </td>#}
+        {#                        </tr>#}
+        {#                        </tbody>#}
+        {#                    </table>#}
+        {##}
+        {#                </div>#}
+        {#            </div>#}
+        {#        </div>#}
+    </div>
+{% endblock content %}
+
+{% block javascripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='vendors/pnotify/dist/pnotify.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/pnotify/dist/pnotify.buttons.js') }}"></script>
+    <!-- Datatables -->
+    <script src="{{ url_for('static', filename='vendors/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-scroller/js/dataTables.scroller.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/jszip/dist/jszip.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/pdfmake/build/pdfmake.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/pdfmake/build/vfs_fonts.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/jquery.serializejson.js') }}"></script>
+    <script src="{{ url_for('doctor_blueprint.static',filename='table.js') }}"></script>
+{% endblock javascripts %}

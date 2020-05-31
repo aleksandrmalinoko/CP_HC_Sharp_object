@@ -1,11 +1,11 @@
 import re
-from datetime import datetime
 from time import strftime, gmtime
 
-from app.patient import blueprint
 from flask import render_template, request, jsonify
 from flask_login import login_required
+
 from app.base.models import Sugar, db
+from app.patient import blueprint
 
 
 def retrieve(model, **kwargs):
@@ -26,9 +26,9 @@ def get_sugar():
         data=db.session.query(Sugar).order_by(Sugar.id.asc()).all())
 
 
-@blueprint.route('/delete/<id>', methods=['POST'])
+@blueprint.route('/delete_sugar/<id>', methods=['POST'])
 @login_required
-def delete(id):
+def delete_sugar(id):
     cls = Sugar
     obj = retrieve(cls, id=id)
     db.session.delete(obj)
@@ -36,9 +36,9 @@ def delete(id):
     return jsonify({'current_time': obj.current_time})
 
 
-@blueprint.route('/edit/', methods=['POST', 'GET'])
+@blueprint.route('/edit_sugar/', methods=['POST', 'GET'])
 @login_required
-def edit():
+def edit_sugar():
     cls = Sugar
     obj = retrieve(cls, id=str(request.form["id"]))
     obj.current_time = str(request.form["current_time"])
@@ -47,9 +47,9 @@ def edit():
     return jsonify({'current_time': obj.current_time})
 
 
-@blueprint.route('/add/', methods=['GET', 'POST'])
+@blueprint.route('/add_sugar/', methods=['GET', 'POST'])
 @login_required
-def add():
+def add_sugar():
     obj = Sugar()
     obj.current_time = strftime("%d-%m-%Y %H:%M:%S", gmtime())
     match = re.search('сахар.*?(\d.*\d+)|сахар.*?(\d)|(\d.*\d+)', request.form["sugar"])

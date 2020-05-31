@@ -28,10 +28,10 @@ $(document).ready(function () {
 
 let rIndex, table = document.getElementById('datatable');
 
-function addHtmlTableRow() {
+function add_sugar() {
     $.ajax({
         type: 'POST',
-        url: `/patient/add/`,
+        url: `/patient/add_sugar/`,
         data: $('form').serializeJSON(),
         dataType: 'json',
         cache: false,
@@ -99,10 +99,10 @@ function selectedRowToInput() {
 
 selectedRowToInput();
 
-function editHtmlTableSelectedRow() {
+function edit_sugar() {
     $.ajax({
         type: 'POST',
-        url: `/patient/edit/`,
+        url: `/patient/edit_sugar/`,
         data: $('form').serializeJSON(),
         dataType: 'json',
         cache: false,
@@ -137,10 +137,10 @@ function editHtmlTableSelectedRow() {
     });
 }
 
-function removeSelectedRow() {
+function remove_sugar() {
     $.ajax({
         type: 'POST',
-        url: `/patient/delete/${document.getElementById('id').value}`,
+        url: `/patient/delete_sugar/${document.getElementById('id').value}`,
 
         success: function (result) {
             if (!result) {
