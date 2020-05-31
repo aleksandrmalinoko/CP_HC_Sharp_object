@@ -14,13 +14,15 @@ def retrieve(model, **kwargs):
 def route_template(template):
     return render_template(template + '.html')
 
+
 @blueprint.route('/patients', methods=['GET', 'POST'])
 @login_required
 def get_patient():
     return render_template(
         'patients.html',
         patients=db.session.query(Patient).order_by(Patient.id.asc()).all(),
-        sugar=db.session.query(Sugar).order_by(Sugar.id.asc()).all())
+        sugar=db.session.query(Sugar))
+
 
 @blueprint.route('/delete_patient/<id>', methods=['POST'])
 @login_required

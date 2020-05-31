@@ -195,7 +195,7 @@ function remove_patient() {
 
                 new PNotify({
                     title: 'Выполнено',
-                    text: 'Запис  удалена!',
+                    text: 'Запись  удалена!',
                     type: 'success',
                     styling: 'bootstrap3'
                 });

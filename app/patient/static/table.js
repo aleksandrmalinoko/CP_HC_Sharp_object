@@ -154,7 +154,7 @@ function remove_sugar() {
 
                 new PNotify({
                     title: 'Выполнено',
-                    text: 'Запис  удалена!',
+                    text: 'Запись  удалена!',
                     type: 'success',
                     styling: 'bootstrap3'
                 });
