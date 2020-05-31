@@ -2,7 +2,7 @@ from app.doctor import blueprint
 from time import strftime, gmtime
 from flask import render_template, jsonify, request
 from flask_login import login_required
-from app.base.models import Patient, db
+from app.base.models import Patient, db, Sugar
 
 
 def retrieve(model, **kwargs):
@@ -19,7 +19,8 @@ def route_template(template):
 def get_patient():
     return render_template(
         'patients.html',
-        data=db.session.query(Patient).order_by(Patient.id.asc()).all())
+        patients=db.session.query(Patient).order_by(Patient.id.asc()).all(),
+        sugar=db.session.query(Sugar).order_by(Sugar.id.asc()).all())
 
 @blueprint.route('/delete_patient/<id>', methods=['POST'])
 @login_required

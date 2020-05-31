@@ -25,6 +25,33 @@ $(document).ready(function () {
         },
     });
 });
+$(document).ready(function () {
+    $('#sugar').DataTable({
+        keys: true,
+        language: {
+            "processing": "Подождите...",
+            "search": "Поиск:",
+            "lengthMenu": "Показать _MENU_ записей",
+            "info": "Записи с _START_ до _END_ из _TOTAL_ записей",
+            "infoEmpty": "Записи с 0 до 0 из 0 записей",
+            "infoFiltered": "(отфильтровано из _MAX_ записей)",
+            "infoPostFix": "",
+            "loadingRecords": "Загрузка записей...",
+            "zeroRecords": "Записи отсутствуют.",
+            "emptyTable": "В таблице отсутствуют данные",
+            "paginate": {
+                "first": "Первая",
+                "previous": "Предыдущая",
+                "next": "Следующая",
+                "last": "Последняя"
+            },
+            "aria": {
+                "sortAscending": ": активировать для сортировки столбца по возрастанию",
+                "sortDescending": ": активировать для сортировки столбца по убыванию"
+            }
+        },
+    });
+});
 
 let rIndex, table = document.getElementById('patients');
 
@@ -47,7 +74,7 @@ function add_patient() {
                     cell3 = newRow.insertCell(3),
                     cell4 = newRow.insertCell(4),
                     id = document.getElementById("id").value,
-                    username = document.getElementById("id").value,
+                    username = document.getElementById("username").value,
                     birthday = document.getElementById("birthday").value,
                     snails = document.getElementById("snails").value,
                     date_reception = new Date();
@@ -59,7 +86,7 @@ function add_patient() {
                 var minutes = date_reception.getMinutes()
                 var seconds = date_reception.getSeconds()
 
-                var last = Number(document.getElementById('datatable_info').innerHTML.split(' ')[6]);
+                var last = Number(document.getElementById('patients_info').innerHTML.split(' ')[6]);
 
                 cell0.innerHTML = last + 1,
                     cell1.innerHTML = username,

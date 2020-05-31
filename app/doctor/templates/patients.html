@@ -98,9 +98,8 @@
                                         style="margin: 5px">
                                     Добавить
                                 </button>
-                                <button class="btn btn-warning" type="button" onclick="open_patient();"
-                                        style="margin: 5px">
-                                    Открыть
+                                <button type="button" class="btn btn-warning" data-toggle="modal"
+                                        data-target=".bs-example-modal-lg" style="margin: 5px">Открыть
                                 </button>
                             </div>
                         </div>
@@ -124,13 +123,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for d in data %}
+                        {% for patient in patients %}
                             <tr>
-                                <td>{{ d.id }}</td>
-                                <td>{{ d.username }}</td>
-                                <td>{{ d.birthday }}</td>
-                                <td>{{ d.snails }}</td>
-                                <td>{{ d.date_reception }}</td>
+                                <td>{{ patient.id }}</td>
+                                <td>{{ patient.username }}</td>
+                                <td>{{ patient.birthday }}</td>
+                                <td>{{ patient.snails }}</td>
+                                <td>{{ patient.date_reception }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -138,75 +137,42 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        {#        <div class="col-md-12 col-sm-12 col-xs-12">#}
-        {#            <div class="x_panel">#}
-        {#                <div class="x_title">#}
-        {#                    <h2>Пациенты<small>basic table subtitle</small></h2>#}
-        {#                    <div class="clearfix"></div>#}
-        {#                </div>#}
-        {#                <div class="form-group">#}
-        {#                    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">#}
-        {#                        <button type="button" class="btn btn-primary">Добавить</button>#}
-        {#                    </div>#}
-        {#                </div>#}
-        {#                <div class="x_content">#}
-        {#                    <div class="ln_solid"></div>#}
-        {##}
-        {#                    <table class="table">#}
-        {#                        <thead>#}
-        {#                        <tr>#}
-        {#                            <th>№</th>#}
-        {#                            <th>Фамилия Имя Отчество</th>#}
-        {#                            <th>Дата рождения</th>#}
-        {#                            <th>СНИЛС</th>#}
-        {#                            <th>Дата первичного приема</th>#}
-        {#                            <th>Профиль</th>#}
-        {#                        </tr>#}
-        {#                        </thead>#}
-        {#                        <tbody>#}
-        {#                        <tr>#}
-        {#                            <th>1</th>#}
-        {#                            <td>Иванов Иван Иванович</td>#}
-        {#                            <td>10.10.1960</td>#}
-        {#                            <td>123-456-789-01</td>#}
-        {#                            <td>01.01.2020</td>#}
-        {#                            <td>#}
-        {#                                <a href="/patient/profile1">#}
-        {#                                    <button type="button" class="btn btn-success btn-xs">Открыть</button>#}
-        {#                                </a>#}
-        {#                            </td>#}
-        {#                        </tr>#}
-        {#                        <tr>#}
-        {#                            <th>2</th>#}
-        {#                            <td>Петров Петр Петрович</td>#}
-        {#                            <td>20.02.1967</td>#}
-        {#                            <td>123-456-789-02</td>#}
-        {#                            <td>05.01.2020</td>#}
-        {#                            <td>#}
-        {#                                <a href="/patient/profile2">#}
-        {#                                    <button type="button" class="btn btn-success btn-xs">Открыть</button>#}
-        {#                                </a>#}
-        {#                            </td>#}
-        {#                        </tr>#}
-        {#                        <tr>#}
-        {#                            <th>3</th>#}
-        {#                            <td>Сидоров Сидор Сидорович</td>#}
-        {#                            <td>26.09.1959</td>#}
-        {#                            <td>123-456-789-03</td>#}
-        {#                            <td>03.01.2020</td>#}
-        {#                            <td>#}
-        {#                                <a href="/patient/profile3">#}
-        {#                                    <button type="button" class="btn btn-success btn-xs">Открыть</button>#}
-        {#                                </a>#}
-        {#                            </td>#}
-        {#                        </tr>#}
-        {#                        </tbody>#}
-        {#                    </table>#}
-        {##}
-        {#                </div>#}
-        {#            </div>#}
-        {#        </div>#}
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Дневник сахаров для пациента</h4>
+                </div>
+                <div class="modal-body">
+                    <table id="sugar" class="table table-striped table-bordered">
+                        <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Время записи</th>
+                            <th>Сахар, ммоль/л</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for s in sugar %}
+                            <tr>
+                                <td>{{ s.id }}</td>
+                                <td>{{ s.current_time }}</td>
+                                <td>{{ s.sugar }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock content %}
 
