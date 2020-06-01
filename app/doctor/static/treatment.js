@@ -1,32 +1,5 @@
 $(document).ready(function () {
-    $('#patients').DataTable({
-        keys: true,
-        language: {
-            "processing": "Подождите...",
-            "search": "Поиск:",
-            "lengthMenu": "Показать _MENU_ записей",
-            "info": "Записи с _START_ до _END_ из _TOTAL_ записей",
-            "infoEmpty": "Записи с 0 до 0 из 0 записей",
-            "infoFiltered": "(отфильтровано из _MAX_ записей)",
-            "infoPostFix": "",
-            "loadingRecords": "Загрузка записей...",
-            "zeroRecords": "Записи отсутствуют.",
-            "emptyTable": "В таблице отсутствуют данные",
-            "paginate": {
-                "first": "Первая",
-                "previous": "Предыдущая",
-                "next": "Следующая",
-                "last": "Последняя"
-            },
-            "aria": {
-                "sortAscending": ": активировать для сортировки столбца по возрастанию",
-                "sortDescending": ": активировать для сортировки столбца по убыванию"
-            }
-        },
-    });
-});
-$(document).ready(function () {
-    $('#sugar').DataTable({
+    $('#treatment').DataTable({
         keys: true,
         language: {
             "processing": "Подождите...",
@@ -53,12 +26,12 @@ $(document).ready(function () {
     });
 });
 
-let rIndex, table = document.getElementById('patients');
+let rIndex, table = document.getElementById('treatment');
 
-function add_patient() {
+function add_treatment() {
     $.ajax({
         type: 'POST',
-        url: `/doctor/add_patient/`,
+        url: `/doctor/add_treatment/`,
         data: $('form').serializeJSON(),
         dataType: 'json',
         cache: false,
@@ -74,25 +47,19 @@ function add_patient() {
                     cell3 = newRow.insertCell(3),
                     cell4 = newRow.insertCell(4),
                     id = document.getElementById("id").value,
-                    username = document.getElementById("username").value,
-                    birthday = document.getElementById("birthday").value,
-                    snails = document.getElementById("snails").value,
-                    date_reception = new Date();
+                    title = document.getElementById("title").value,
+                    dosage = document.getElementById("dosage").value,
+                    form = document.getElementById("form").value,
+                    signature = document.getElementById("signature").value;
 
-                var date = date_reception.getDate();
-                var month = date_reception.getMonth();
-                var year = date_reception.getFullYear();
-                var hours = date_reception.getHours()
-                var minutes = date_reception.getMinutes()
-                var seconds = date_reception.getSeconds()
 
-                var last = Number(document.getElementById('patients_info').innerHTML.split(' ')[6]);
+                var last = Number(document.getElementById('treatment').innerHTML.split(' ')[6]);
 
                 cell0.innerHTML = last + 1,
-                    cell1.innerHTML = username,
-                    cell2.innerHTML = birthday,
-                    cell3.innerHTML = snails,
-                    cell4.innerHTML = date + "-" + (month + 1) + "-" + year + " " + hours + ":" + minutes + ":" + seconds
+                    cell1.innerHTML = title,
+                    cell2.innerHTML = dosage,
+                    cell3.innerHTML = form,
+                    cell4.innerHTML = signature
                 // call the function to set the event to the new row
                 selectedRowToInput();
 
@@ -124,20 +91,20 @@ function selectedRowToInput() {
         table.rows[i].onclick = function () {
             rIndex = this.rowIndex;
             document.getElementById("id").value = this.cells[0].innerHTML;
-            document.getElementById("username").value = this.cells[1].innerHTML;
-            document.getElementById("birthday").value = this.cells[2].innerHTML;
-            document.getElementById("snails").value = this.cells[3].innerHTML;
-            document.getElementById("date_reception").value = this.cells[4].innerHTML;
+            document.getElementById("title").value = this.cells[1].innerHTML;
+            document.getElementById("dosage").value = this.cells[2].innerHTML;
+            document.getElementById("form").value = this.cells[3].innerHTML;
+            document.getElementById("signature").value = this.cells[4].innerHTML;
         }
     }
 }
 
 selectedRowToInput();
 
-function edit_patient() {
+function edit_treatment() {
     $.ajax({
         type: 'POST',
-        url: `/doctor/edit_patient/`,
+        url: `/doctor/edit_treatment/`,
         data: $('form').serializeJSON(),
         dataType: 'json',
         cache: false,
@@ -146,16 +113,16 @@ function edit_patient() {
                 alertify.notify('HTTP Error 403 – Forbidden', 'error', 5);
             } else {
                 let id = document.getElementById("id").value,
-                    username = document.getElementById("username").value,
-                    birthday = document.getElementById("birthday").value,
-                    snails = document.getElementById("snails").value,
-                    date_reception = document.getElementById("date_reception").value;
+                    title = document.getElementById("title").value,
+                    dosage = document.getElementById("dosage").value,
+                    form = document.getElementById("form").value,
+                    signature = document.getElementById("signature").value;
 
                 table.rows[rIndex].cells[0].innerHTML = id;
-                table.rows[rIndex].cells[1].innerHTML = username;
-                table.rows[rIndex].cells[2].innerHTML = birthday;
-                table.rows[rIndex].cells[3].innerHTML = snails;
-                table.rows[rIndex].cells[4].innerHTML = date_reception;
+                table.rows[rIndex].cells[1].innerHTML = title;
+                table.rows[rIndex].cells[2].innerHTML = dosage;
+                table.rows[rIndex].cells[3].innerHTML = form;
+                table.rows[rIndex].cells[4].innerHTML = signature;
 
                 new PNotify({
                     title: 'Выполнено',
@@ -176,10 +143,10 @@ function edit_patient() {
     });
 }
 
-function remove_patient() {
+function remove_treatment() {
     $.ajax({
         type: 'POST',
-        url: `/doctor/delete_patient/${document.getElementById('id').value}`,
+        url: `/doctor/delete_treatment/${document.getElementById('id').value}`,
 
         success: function (result) {
             if (!result) {
@@ -188,10 +155,10 @@ function remove_patient() {
                 table.deleteRow(rIndex);
                 // clear input text
                 document.getElementById("id").value = "";
-                document.getElementById("username").value = "";
-                document.getElementById("birthday").value = "";
-                document.getElementById("snails").value = "";
-                document.getElementById("date_reception").value = "";
+                document.getElementById("title").value = "";
+                document.getElementById("dosage").value = "";
+                document.getElementById("form").value = "";
+                document.getElementById("signature").value = "";
 
                 new PNotify({
                     title: 'Выполнено',

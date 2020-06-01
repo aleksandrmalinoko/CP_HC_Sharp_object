@@ -4,7 +4,7 @@ from app.doctor import blueprint
 from time import strftime, gmtime
 from flask import render_template, jsonify, request
 from flask_login import login_required
-from app.base.models import Patient, db, Sugar
+from app.base.models import Patient, db, Sugar, Pharmacy
 
 
 def retrieve(model, **kwargs):
@@ -15,6 +15,50 @@ def retrieve(model, **kwargs):
 @login_required
 def route_template(template):
     return render_template(template + '.html')
+
+
+@blueprint.route('/treatment', methods=['GET', 'POST'])
+@login_required
+def get_treatment():
+    return render_template(
+        'treatment.html',
+        data=db.session.query(Pharmacy).order_by(Pharmacy.id.asc()).all())
+
+
+@blueprint.route('/delete_treatment/<id>', methods=['POST'])
+@login_required
+def delete_treatment(id):
+    cls = Pharmacy
+    obj = retrieve(cls, id=id)
+    db.session.delete(obj)
+    db.session.commit()
+    return jsonify({'title': obj.title})
+
+
+@blueprint.route('/edit_treatment/', methods=['POST', 'GET'])
+@login_required
+def edit_treatment():
+    cls = Pharmacy
+    obj = retrieve(cls, id=str(request.form["id"]))
+    obj.title = str(request.form["title"])
+    obj.dosage = str(request.form["dosage"])
+    obj.form = str(request.form["form"])
+    obj.signature = str(request.form["signature"])
+    db.session.commit()
+    return jsonify({'title': obj.title})
+
+
+@blueprint.route('/add_treatment/', methods=['GET', 'POST'])
+@login_required
+def add_treatment():
+    obj = Pharmacy()
+    obj.title = str(request.form["title"])
+    obj.dosage = str(request.form["dosage"])
+    obj.form = str(request.form["form"])
+    obj.signature = str(request.form["signature"])
+    db.session.add(obj)
+    db.session.commit()
+    return jsonify({'title': obj.title})
 
 
 @blueprint.route('/patients', methods=['GET', 'POST'])

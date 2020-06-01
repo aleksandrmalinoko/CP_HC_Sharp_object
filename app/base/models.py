@@ -5,6 +5,30 @@ from sqlalchemy import Binary, Column, Integer, String, Float
 from app import db, login_manager
 
 
+class Pharmacy(db.Model):
+    __table__name = 'Pharmacy'
+    id = Column(Integer, primary_key=True)
+    title = Column(String)
+    dosage = Column(String)
+    form = Column(String)
+    signature = Column(String)
+
+    def __init__(self, **kwargs):
+        for property, value in kwargs.items():
+            # depending on whether value is an iterable or not, we must
+            # unpack it's value (when **kwargs is request.form, some values
+            # will be a 1-element list)
+            if hasattr(value, '__iter__') and not isinstance(value, str):
+                # the ,= unpack of a singleton fails PEP8 (travis flake8 test)
+                value = value[0]
+            if property == 'password':
+                value = hashpw(value.encode('utf8'), gensalt())
+            setattr(self, property, value)
+
+    def __repr__(self):
+        return str(self.title)
+
+
 class Sugar(db.Model):
     __table__name = 'Sugar'
     id = Column(Integer, primary_key=True)

@@ -40,13 +40,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Зодак</td>
-                            <td>Таблетки</td>
-                            <td>1 таблетка/3 раза в день</td>
-                            <td>250</td>
-                        </tr>
+                        {% for d in data %}
+                            <tr>
+                                <td>{{ d.id }}</td>
+                                <td>{{ d.title }}</td>
+                                <td>{{ d.dosage }}</td>
+                                <td>{{ d.form }}</td>
+                                <td>{{ d.signature }}</td>
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>

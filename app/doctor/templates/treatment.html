@@ -1,0 +1,232 @@
+{% extends "base_site.html" %}
+
+{% block title %} Рецепты {% endblock title %}
+
+{% block stylesheets %}
+    {{ super() }}
+    {{ super() }}
+    <link href="{{ url_for('static', filename='vendors/pnotify/dist/pnotify.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/pnotify/dist/pnotify.buttons.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/pnotify/dist/pnotify.nonblock.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/datatables.net-bs/css/dataTables.bootstrap.min.css') }}"
+          rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}"
+          rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css') }}"
+          rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}"
+          rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css') }}"
+          rel="stylesheet">
+{% endblock stylesheets %}
+
+{% block content %}
+    <div class="right_col" role="main">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Выбор лекарства</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div id="wizard" class="form_wizard wizard_horizontal">
+                        <ul class="wizard_steps">
+                            <li>
+                                <a href="#step-1">
+                                    <span class="step_no">1</span>
+                                    <span class="step_descr">
+                                        Пациент<br/>
+                                        <small>Выберите пациента</small>
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#step-2">
+                                    <span class="step_no">2</span>
+                                    <span class="step_descr">
+                                        Лекарства<br/>
+                                        <small>Просмотр лекарств</small>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div id="step-1">
+                            <form class="form-horizontal form-label-left">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Имя
+                                        <span
+                                                class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" id="first-name" name="first-name" required="required"
+                                               class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="middle-name">Отчество
+                                        <span
+                                                class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" id="middle-name" name="middle-name" required="required"
+                                               class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Фамилия
+                                        <span
+                                                class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" id="last-name" name="last-name" required="required"
+                                               class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="snails">Снилс <span
+                                            class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input type="text" id="snails" name="snails" required="required"
+                                               class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">Дата рождения <span
+                                            class="required">*</span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <input id="birthday" class="date-picker form-control col-md-7 col-xs-12"
+                                               required="required"
+                                               type="text">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="step-2">
+                            <form data-parsley-validate class="form-horizontal form-label-left"
+                                  enctype="application/x-www-form-urlencoded">
+                                <div class="ln_solid"></div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label" for="id">
+                                        Идентификатор
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="id" required="required" name="id"
+                                               class="form-control" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label" for="title">
+                                        Название препарата
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="title" required="required" name="title"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label" for="dosage">
+                                        Дозировка, мг
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="dosage" required="required" name="dosage"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label" for="form">
+                                        Форма выпуска
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="form" required="required" name="form"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label" for="signature">
+                                        Сигнатура
+                                    </label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="signature" required="required" name="signature"
+                                               class="form-control">
+                                    </div>
+                                </div>
+                                <div class="ln_solid"></div>
+                                <div class="form-group row">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-md-offset-3">
+                                        <button class="btn btn-danger" type="button" onclick="remove_treatment();"
+                                                style="margin: 5px">
+                                            Удалить
+                                        </button>
+                                        <button class="btn btn-primary" type="reset"
+                                                style="margin: 5px">
+                                            Отмена
+                                        </button>
+                                        <button class="btn btn-success" type="button" onclick="edit_treatment();"
+                                                style="margin: 5px">
+                                            Записать
+                                        </button>
+                                        <button class="btn btn-info" type="button" onclick="add_treatment();"
+                                                style="margin: 5px">
+                                            Добавить
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            <h2 class="StepTitle">Список рецептов</h2>
+                            <div class="ln_solid"></div>
+                            <table id="treatment" class="table table-striped table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>№</th>
+                                    <th>Название препарата</th>
+                                    <th>Дозировка, мг</th>
+                                    <th>Форма выпуска</th>
+                                    <th>Сигнатура</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for d in data %}
+                                    <tr>
+                                        <td>{{ d.id }}</td>
+                                        <td>{{ d.title }}</td>
+                                        <td>{{ d.dosage }}</td>
+                                        <td>{{ d.form }}</td>
+                                        <td>{{ d.signature }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block javascripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='vendors/pnotify/dist/pnotify.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/pnotify/dist/pnotify.buttons.js') }}"></script>
+    <!-- Datatables -->
+    <script src="{{ url_for('static', filename='vendors/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-scroller/js/dataTables.scroller.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/jszip/dist/jszip.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/pdfmake/build/pdfmake.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/pdfmake/build/vfs_fonts.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/jquery.serializejson.js') }}"></script>
+    <script src="{{ url_for('doctor_blueprint.static',filename='treatment.js') }}"></script>
+{% endblock javascripts %}

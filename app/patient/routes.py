@@ -4,7 +4,7 @@ from time import strftime, gmtime
 from flask import render_template, request, jsonify
 from flask_login import login_required
 
-from app.base.models import Sugar, db
+from app.base.models import Pharmacy, Sugar, db
 from app.patient import blueprint
 
 
@@ -16,6 +16,14 @@ def retrieve(model, **kwargs):
 @login_required
 def route_template(template):
     return render_template(template + '.html')
+
+
+@blueprint.route('/pharmacy', methods=['GET', 'POST'])
+@login_required
+def get_pharmacy():
+    return render_template(
+        'pharmacy.html',
+        data=db.session.query(Pharmacy).order_by(Pharmacy.id.asc()).all())
 
 
 @blueprint.route('/sugar', methods=['GET', 'POST'])
@@ -67,5 +75,3 @@ def add_sugar():
     db.session.add(obj)
     db.session.commit()
     return jsonify({'current_time': strftime("%d-%m-%Y %H:%M:%S", gmtime())})
-
-
