@@ -54,7 +54,6 @@ def edit_patient():
 @login_required
 def add_patient():
     obj = Patient()
-    print("HER")
     obj.username = str(request.form["username"])
     obj.birthday = str(request.form["birthday"])
     obj.snails = str(request.form["snails"])
@@ -68,25 +67,20 @@ def add_patient():
 @login_required
 def add_sugar_with():
     obj = Sugar()
-    obj.current_time = strftime("%d-%m-%Y %H:%M:%S", gmtime())
-    line: str = str(request.args.get('sugar')).replace(',', '.')
-    match = re.search(r'сахар.*?(\d.*\d+)|сахар.*?(\d)|(\d.*\d+)', line)
-    print(line)
-    sugar = float()
+    response: list = str(request.args.get('sugar')).replace(',', '.').split(' ')
+    sugar: str = ' '
+    for i, word in enumerate(response):
+        if 'саха' in word:
+            sugar = sugar.join(response[i:])
+    nums = re.findall(r'\d*\.\d+|\d+', sugar)
+    nums: list = [float(i) for i in nums]
     try:
-        if match.group(1):
-            sugar = match.group(1)
-            print(sugar)
-        elif match.group(2):
-            sugar = match.group(2)
-        elif match.group(3):
-            sugar = match.group(3)
-    except AttributeError as e:
-        print(f"AttributeError is {e}")
-    except ValueError as e:
-        print(f"ValueError is {e}")
-    print(sugar)
-    obj.sugar = float(sugar)
+        obj.sugar = float(nums[0])
+    except IndexError as e:
+        print(f"IndexError is {e}")
+    except Exception as e:
+        print(f"Exception is {e}")
+    obj.current_time = strftime("%d-%m-%Y %H:%M:%S", gmtime())
     db.session.add(obj)
     db.session.commit()
     return render_template(
@@ -94,3 +88,4 @@ def add_sugar_with():
         patients=db.session.query(Patient).order_by(Patient.id.asc()).all(),
         sugar=db.session.query(Sugar)
     )
+# http://127.0.0.1:5000/doctor/add_sugar_with/?sugar=30%20мая%20мой%20сахар%20был%20равен%2010

@@ -23,12 +23,15 @@ lines: list = [
 #     print(sugar)
 
 
-for line in lines:
-    line: list = str(line).replace(',', '.').split(' ')
-    output: str = ' '
-    for i, l in enumerate(line):
-        if 'саха' in l:
-            output = output.join(line[i:])
-    nums = re.findall(r'\d*\.\d+|\d+', output)
-    nums = [float(i) for i in nums]
-    print(nums[0])
+# for line in lines:
+#     line: list = str(line).replace(',', '.').split(' ')
+#     output: str = ' '
+#     for i, l in enumerate(line):
+#         if 'саха' in l:
+#             output = output.join(line[i:])
+#     nums = re.findall(r'\d*\.\d+|\d+', output)
+#     nums = [float(i) for i in nums]
+#     try:
+#         print(nums[0])
+#     except IndexError as e:
+#         print(f"IndexError is {e}")

@@ -34,17 +34,19 @@
                         <tr>
                             <th>№</th>
                             <th>Название препарата</th>
-                            <th>Объем/Вес</th>
+                            <th>Дозировка, мг</th>
+                            <th>Форма выпуска</th>
+                            <th>Сигнатура</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {% for d in data %}
-                            <tr>
-                                <td>{{ d.id }}</td>
-                                <td>{{ d.current_time }}</td>
-                                <td>{{ d.sugar }}</td>
-                            </tr>
-                        {% endfor %}
+                        <tr>
+                            <td>1</td>
+                            <td>Зодак</td>
+                            <td>Таблетки</td>
+                            <td>1 таблетка/3 раза в день</td>
+                            <td>250</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
