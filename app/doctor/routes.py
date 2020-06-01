@@ -1,3 +1,5 @@
+import re
+
 from app.doctor import blueprint
 from time import strftime, gmtime
 from flask import render_template, jsonify, request
@@ -59,3 +61,30 @@ def add_patient():
     db.session.add(obj)
     db.session.commit()
     return jsonify({'snails': obj.snails})
+
+
+@blueprint.route('/add_sugar_with/', methods=['GET', 'POST'])
+@login_required
+def add_sugar_with():
+    obj = Sugar()
+    obj.current_time = strftime("%d-%m-%Y %H:%M:%S", gmtime())
+    match = re.search('сахар.*?(\d.*\d+)|сахар.*?(\d)|(\d.*\d+)', str(request.args.get('sugar')))
+    print(match)
+    sugar = float()
+    try:
+        if match.group(1):
+            sugar = match.group(1)
+        elif match.group(2):
+            sugar = match.group(2)
+        elif match.group(3):
+            sugar = match.group(3)
+    except AttributeError as e:
+        pass
+    print(sugar)
+    obj.sugar = float(sugar)
+    db.session.add(obj)
+    db.session.commit()
+    return render_template(
+        'patients.html',
+        patients=db.session.query(Patient).order_by(Patient.id.asc()).all(),
+        sugar=db.session.query(Sugar))

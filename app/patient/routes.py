@@ -67,3 +67,5 @@ def add_sugar():
     db.session.add(obj)
     db.session.commit()
     return jsonify({'current_time': strftime("%d-%m-%Y %H:%M:%S", gmtime())})
+
+
