@@ -68,18 +68,22 @@ def add_patient():
 def add_sugar_with():
     obj = Sugar()
     obj.current_time = strftime("%d-%m-%Y %H:%M:%S", gmtime())
-    match = re.search('сахар.*?(\d.*\d+)|сахар.*?(\d)|(\d.*\d+)', str(request.args.get('sugar')))
-    print(match)
+    line: str = str(request.args.get('sugar')).replace(',', '.')
+    match = re.search('сахар.*?(\d.*\d+)|сахар.*?(\d)|(\d.*\d+)', line)
+    print(line)
     sugar = float()
     try:
         if match.group(1):
             sugar = match.group(1)
+            print(sugar)
         elif match.group(2):
             sugar = match.group(2)
         elif match.group(3):
             sugar = match.group(3)
     except AttributeError as e:
-        pass
+        print(f"AttributeError is {e}")
+    except ValueError as e:
+        print(f"ValueError is {e}")
     print(sugar)
     obj.sugar = float(sugar)
     db.session.add(obj)
