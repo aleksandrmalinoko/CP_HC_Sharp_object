@@ -23,7 +23,8 @@ def get_patient():
     return render_template(
         'patients.html',
         patients=db.session.query(Patient).order_by(Patient.id.asc()).all(),
-        sugar=db.session.query(Sugar))
+        sugar=db.session.query(Sugar)
+    )
 
 
 @blueprint.route('/delete_patient/<id>', methods=['POST'])
@@ -69,7 +70,7 @@ def add_sugar_with():
     obj = Sugar()
     obj.current_time = strftime("%d-%m-%Y %H:%M:%S", gmtime())
     line: str = str(request.args.get('sugar')).replace(',', '.')
-    match = re.search('сахар.*?(\d.*\d+)|сахар.*?(\d)|(\d.*\d+)', line)
+    match = re.search(r'сахар.*?(\d.*\d+)|сахар.*?(\d)|(\d.*\d+)', line)
     print(line)
     sugar = float()
     try:
@@ -91,4 +92,5 @@ def add_sugar_with():
     return render_template(
         'patients.html',
         patients=db.session.query(Patient).order_by(Patient.id.asc()).all(),
-        sugar=db.session.query(Sugar))
+        sugar=db.session.query(Sugar)
+    )
