@@ -23,7 +23,8 @@ def route_template(template):
 def get_pharmacy():
     return render_template(
         'pharmacy.html',
-        data=db.session.query(Pharmacy).order_by(Pharmacy.id.asc()).all())
+        data=db.session.query(Pharmacy).order_by(Pharmacy.id.asc()).all()
+    )
 
 
 @blueprint.route('/sugar', methods=['GET', 'POST'])

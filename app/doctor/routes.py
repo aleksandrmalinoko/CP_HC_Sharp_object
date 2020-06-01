@@ -22,7 +22,9 @@ def route_template(template):
 def get_treatment():
     return render_template(
         'treatment.html',
-        data=db.session.query(Pharmacy).order_by(Pharmacy.id.asc()).all())
+        treatments=db.session.query(Pharmacy).order_by(Pharmacy.id.asc()).all(),
+        patients=db.session.query(Patient).order_by(Patient.id.asc()).all(),
+    )
 
 
 @blueprint.route('/delete_treatment/<id>', methods=['POST'])
