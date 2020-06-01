@@ -1,9 +1,23 @@
 {% extends "base_site.html" %}
 
-{% block title %} Лекарства {% endblock title %}
+{% block title %} Рецепты {% endblock title %}
 
 {% block stylesheets %}
     {{ super() }}
+    {{ super() }}
+    <link href="{{ url_for('static', filename='vendors/pnotify/dist/pnotify.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/pnotify/dist/pnotify.buttons.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/pnotify/dist/pnotify.nonblock.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/datatables.net-bs/css/dataTables.bootstrap.min.css') }}"
+          rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}"
+          rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css') }}"
+          rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}"
+          rel="stylesheet">
+    <link href="{{ url_for('static', filename='vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css') }}"
+          rel="stylesheet">
 {% endblock stylesheets %}
 
 {% block content %}
@@ -11,7 +25,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h1>Лекарства</h1>
+                    <h1>Рецепты</h1>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -19,16 +33,18 @@
                         <thead>
                         <tr>
                             <th>№</th>
-                            <th>Время записи</th>
-                            <th>Сахар, ммоль/л</th>
+                            <th>Название препарата</th>
+                            <th>Объем/Вес</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>10.08.1998</td>
-                            <td>4.2</td>
-                        </tr>
+                        {% for d in data %}
+                            <tr>
+                                <td>{{ d.id }}</td>
+                                <td>{{ d.current_time }}</td>
+                                <td>{{ d.sugar }}</td>
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -39,4 +55,25 @@
 
 {% block javascripts %}
     {{ super() }}
+    <script src="{{ url_for('static', filename='vendors/pnotify/dist/pnotify.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/pnotify/dist/pnotify.buttons.js') }}"></script>
+    <!-- Datatables -->
+    <script src="{{ url_for('static', filename='vendors/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/buttons.flash.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-fixedheader/js/dataTables.fixedHeader.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-keytable/js/dataTables.keyTable.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-responsive-bs/js/responsive.bootstrap.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/datatables.net-scroller/js/dataTables.scroller.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/jszip/dist/jszip.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/pdfmake/build/pdfmake.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/pdfmake/build/vfs_fonts.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendors/jquery.serializejson.js') }}"></script>
+    <script src="{{ url_for('patient_blueprint.static',filename='table.js') }}"></script>
 {% endblock javascripts %}
