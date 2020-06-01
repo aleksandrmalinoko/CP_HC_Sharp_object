@@ -108,7 +108,6 @@ def add_patient():
 
 
 @blueprint.route('/add_sugar_with/', methods=['GET', 'POST'])
-@login_required
 def add_sugar_with():
     obj = Sugar()
     response: list = str(request.args.get('sugar')).replace(',', '.').split(' ')
